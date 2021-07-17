@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { search } from "../../../actions";
 const SearchBar = (props) => {
-  const [term, setTerm] = useState("");
+  const [term, setTerm] = useState("attack on titan");
   useEffect(() => {
     let timeoutId;
     (async () => {

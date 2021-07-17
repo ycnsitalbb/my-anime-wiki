@@ -12,16 +12,19 @@ class Login extends React.Component {
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
-          // the listener passes true to the callback function when user sign in, and false when sign out
-          this.auth.isSignedIn.listen(this.onSignedIn);
+          this.onAuthChange(this.auth.isSignedIn.get())
+          // the listener will trigger the callback function when user status changed
+          this.auth.isSignedIn.listen(this.onAuthChange);
         });
     });
   }
 
-  onSignedIn = (isSignedIn) => {
+  onAuthChange = (isSignedIn) => {
+    console.log(this.props)
     if (isSignedIn) {
       const userId = this.auth.currentUser.get().getId();
       console.log("the user is now logged in");
+      
       this.props.signIn(userId);
     } else {
       console.log("the user is now signed out");
@@ -63,6 +66,6 @@ class Login extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  return { isSignedIn: state.auth.isSignedIn };
+  return { isSignedIn: state.user.isSignedIn };
 };
 export default connect(mapStateToProps, { signIn, signOut })(Login);
