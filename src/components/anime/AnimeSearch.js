@@ -5,7 +5,6 @@ import SearchResults from "./search/SearchResults";
 const AnimeSearch = () => {
   return (
     <div>
-      <TopMenu active="home"/>
       <SearchBar/>
       <SearchResults/>
     </div>

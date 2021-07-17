@@ -5,7 +5,7 @@ const TopMenu = (props)=>{
     return (
         <div className="ui secondary menu">
             <Link className={`${props.active=="home"?"active":""} item`} to="/">Home</Link>
-            <Link className={`${props.active=="collection"?"active":""} item`} to="/collection">Collection</Link>
+            <Link className={`${props.active=="collection"?"active":""} item`} to="/collection">My Collection</Link>
             <div className="right menu">
                 <Login/>
             </div>

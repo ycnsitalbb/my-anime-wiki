@@ -4,7 +4,6 @@ import Collection from "./collection/Collection";
 const UserAnimeList = () => {
   return (
     <div>
-      <TopMenu active="collection"/>
       <Collection />
     </div>
   );

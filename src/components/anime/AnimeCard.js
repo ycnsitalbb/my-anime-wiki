@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addToList,removeFromList } from "../../actions";
+import { Link } from "react-router-dom";
+import { addToList,removeFromList,fetchAnimeDetail } from "../../actions";
 const AnimeCard = (props) => {
   const renderButton = () => {
     if (props.userId) {
@@ -38,9 +39,9 @@ const AnimeCard = (props) => {
         <img src={props.img} alt={props.title}/>
       </div>
       <div className="content">
-        <a className="header" href={props.url} target="_blank">
+        <Link className="header" onClick={()=>props.fetchAnimeDetail(props.anime.mal_id)} to={`/anime/${props.anime.mal_id}`}>
           {props.title}
-        </a>
+        </Link>
         <div className="meta">
           <span>Description</span>
         </div>
@@ -56,4 +57,4 @@ const AnimeCard = (props) => {
 const mapStateToProps = (state) => {
   return { userId: state.user.userId, animeList: state.user.animeList };
 };
-export default connect(mapStateToProps, { addToList,removeFromList })(AnimeCard);
+export default connect(mapStateToProps, { addToList,removeFromList,fetchAnimeDetail })(AnimeCard);

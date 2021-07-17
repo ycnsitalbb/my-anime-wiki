@@ -55,3 +55,20 @@ export const search = (term) => {
     });
   };
 };
+
+export const fetchAnimeDetail = (animeId) => {
+  return async (dispatch) => {
+    const response = await jikan.get(`/anime/${animeId}`);
+    dispatch({
+      type: "FETCH_ANIME_DETAIL",
+      payload: response.data,
+    });
+  };
+};
+
+export const cleanAnimeDetail = () => {
+  console.log("I am taking action to clean anime detail")
+  return ({
+      type: "CLEAN_ANIME_DETAIL",
+    });
+};
