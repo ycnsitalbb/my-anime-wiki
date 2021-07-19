@@ -43,11 +43,15 @@ export const setSearchTerm = (term) => {
   };
 };
 
-export const search = (term) => {
+export const search = (term=null,page=1,genre=null) => {
   return async (dispatch) => {
     const params = {
       q: term,
+      limit: 10,
+      genre:genre,
+      page:page
     };
+    console.log("I am going to lanuch a search with params of"+params)
     const response = await jikan.get("/search/anime", { params });
     dispatch({
       type: "SEARCH",
@@ -64,11 +68,4 @@ export const fetchAnimeDetail = (animeId) => {
       payload: response.data,
     });
   };
-};
-
-export const cleanAnimeDetail = () => {
-  console.log("I am taking action to clean anime detail")
-  return ({
-      type: "CLEAN_ANIME_DETAIL",
-    });
 };

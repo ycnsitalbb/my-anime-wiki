@@ -1,12 +1,12 @@
 import React from "react";
-import AnimeCard from "./AnimeCard";
+import AnimeItem from "./AnimeItem";
 const AnimeList = (props) => {
   const renderResults = ()=>{
     if(!props.animes){
       return null
     }else{
       return props.animes.map((anime) => (
-        <AnimeCard
+        <AnimeItem
           key={anime.mal_id}
           anime = {anime}
           animeId = {anime.mal_id}

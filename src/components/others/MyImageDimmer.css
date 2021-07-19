@@ -1,0 +1,10 @@
+.ui.dimmer {
+  width: auto;
+  max-height: 240px;
+  object-fit: fill;
+}
+.ui.image {
+  width: auto;
+  max-height: 240px;
+  object-fit: fill;
+}
