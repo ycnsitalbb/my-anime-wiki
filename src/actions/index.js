@@ -51,7 +51,6 @@ export const search = (term=null,page=1,genre=null) => {
       genre:genre,
       page:page
     };
-    console.log("I am going to lanuch a search with params of"+params)
     const response = await jikan.get("/search/anime", { params });
     dispatch({
       type: "SEARCH",
@@ -59,6 +58,7 @@ export const search = (term=null,page=1,genre=null) => {
     });
   };
 };
+
 
 export const fetchAnimeDetail = (animeId) => {
   return async (dispatch) => {

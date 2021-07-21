@@ -8,6 +8,7 @@ import {
   Grid,
   Image
 } from "semantic-ui-react";
+import './ReviewAccordin.css'
 const ReviewAccordion = ({ reviews }) => {
   const [activeIndex, setActiveIndex] = useState(-1);
   const handleClick = (e, titleProps) => {
@@ -92,6 +93,6 @@ const ReviewAccordion = ({ reviews }) => {
       </React.Fragment>
     );
   });
-  return <Accordion styled>{panels}</Accordion>;
+  return <Accordion styled fluid>{panels}</Accordion>;
 };
 export default ReviewAccordion;

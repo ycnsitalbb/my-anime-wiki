@@ -1,29 +1,24 @@
 import React from "react";
-import { Grid, Container } from "semantic-ui-react";
-import MyImageDimmer from "./MyImageDimmer";
-const MyGallery = (props) => {
+import { Grid, Container, Card } from "semantic-ui-react";
+import AnimeCard from "./AnimeCard";
+const MyGallery = ({items,itemsPerRow=6,dimmerActive}) => {
   const renderItems = () => {
-    if (props.items) {
-      return props.items.map((item) => {
+    if (items) {
+      return items.map((item) => {
         return (
-          <Grid.Column key={item.mal_id}>
-            <MyImageDimmer
-              image_url={item.image_url}
-              title={item.title}
-              animeId={item.mal_id}
-            />
-          </Grid.Column>
+          <AnimeCard
+            dimmerActive ={dimmerActive}
+            image_url={item.image_url}
+            title={item.title}
+            animeId={item.mal_id}
+            score = {item.score}
+          />
         );
       });
     }
   };
   return (
-    <Container>
-      <h2>{props.title}</h2>
-      <Grid relaxed>
-        <Grid.Row columns={4}>{renderItems()}</Grid.Row>
-      </Grid>
-    </Container>
+      <Card.Group itemsPerRow={itemsPerRow}>{renderItems()}</Card.Group>
   );
 };
 export default MyGallery;

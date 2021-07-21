@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { Carousel } from "react-bootstrap";
-import MyImageDimmer from "./MyImageDimmer";
+import AnimeCard from "./AnimeCard";
 import "./MyMultiItemCarousel.css";
 const MyMultiItemCarousel = (props) => {
   const chunks = _.chunk(props.items, props.itemsPerSlide);
@@ -9,7 +9,7 @@ const MyMultiItemCarousel = (props) => {
     return items.map((item) => {
       return (
         <div className="col-lg-2" key={item.mal_id}>
-          <MyImageDimmer title={item.title} image_url={item.image_url} score={item.score} animeId={item.mal_id}/>
+          <AnimeCard title={item.title} image_url={item.image_url} score={item.score} animeId={item.mal_id}/>
         </div>
       );
     });

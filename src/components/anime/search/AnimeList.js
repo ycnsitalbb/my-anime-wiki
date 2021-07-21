@@ -9,12 +9,6 @@ const AnimeList = (props) => {
         <AnimeItem
           key={anime.mal_id}
           anime = {anime}
-          animeId = {anime.mal_id}
-          url={anime.url}
-          img={anime.image_url}
-          title={anime.title}
-          synopsis={anime.synopsis}
-          score={anime.score}
         />
       ));
     }

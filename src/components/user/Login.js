@@ -46,7 +46,6 @@ class Login extends React.Component {
     if (this.props.isSignedIn) {
       return (
         <React.Fragment>
-          <p>Hello {this.auth.currentUser.get().getBasicProfile().getName()}</p>
           <button
             className="ui red google button"
             onClick={this.onSignOutClicked}
@@ -58,7 +57,6 @@ class Login extends React.Component {
     } else {
       return (
         <React.Fragment>
-          <p>To unlock more functionalities, please login</p>
           <Button
             color="red google"
             icon="google"
