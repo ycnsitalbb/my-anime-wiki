@@ -1,11 +1,9 @@
 import React from "react";
 import { Button } from "semantic-ui-react";
-import { connect } from "react-redux";
-import { removeFromList } from "../../../actions";
-const BtnRemoveAnime = (props) => {
+const BtnRemoveAnime = ({...rest}) => {
   return (
     <Button
-      onClick={() => props.removeFromList(props.userId, props.animeId)}
+      {...rest}
       icon="minus"
       content="REMOVE"
       labelPosition="left"
@@ -13,4 +11,4 @@ const BtnRemoveAnime = (props) => {
     />
   );
 };
-export default connect(null,{removeFromList})(BtnRemoveAnime);
+export default BtnRemoveAnime;

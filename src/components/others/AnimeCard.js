@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import BtnAnime from "./button/BtnAnime";
 import _ from "lodash";
 import "./AnimeCard.css";
-const AnimeCard = ({ title, image_url, animeId,score, dimmerActive }) => {
+const AnimeCard = ({ title, image_url, mal_id,score, dimmerActive }) => {
   const [active, setActive] = useState(false);
   const truncTitle = (title) => {
     return _.truncate(title, { length: 28, separator: " " });
@@ -13,7 +13,8 @@ const AnimeCard = ({ title, image_url, animeId,score, dimmerActive }) => {
     <div>
       <Header as="h3" inverted content={title} />
       <BtnAnime
-        animeId={animeId}
+        score={score}
+        mal_id={mal_id}
         image_url={image_url}
         title={truncTitle(title)}
       />
@@ -22,7 +23,7 @@ const AnimeCard = ({ title, image_url, animeId,score, dimmerActive }) => {
         icon="eye"
         labelPosition="left"
         content="View"
-        to={`/anime/${animeId}`}
+        to={`/anime/${mal_id}`}
       />
     </div>
   );
@@ -37,7 +38,7 @@ const AnimeCard = ({ title, image_url, animeId,score, dimmerActive }) => {
                 Rating: <Rating icon="star" disabled defaultRating={score/2} maxRating={5}/>
               </div>
             }
-            trigger={<Card.Header as={Link} to={`/anime/${animeId}`}>{truncTitle(title)}</Card.Header>}
+            trigger={<Card.Header as={Link} to={`/anime/${mal_id}`}>{truncTitle(title)}</Card.Header>}
           />
         </Card.Content>
       );

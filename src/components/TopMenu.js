@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Login from "./user/Login";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
-import { Menu, Input, Icon } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 import SearchInput from "./anime/search/SearchInput";
 const TopMenu = (props) => {
+  const location = useLocation();
   const [activeMenu, setActiveMenu] = useState("home");
   const handleMenuClicked = (e, { name }) => setActiveMenu(name);
+  // to update the menu active status when a user jumps from anime detail page to browse page
+  useEffect(() => {
+    if(location.pathname.includes("browse")){
+      setActiveMenu("browse")
+    }
+  }, [location])
   return (
     <Menu>
       <Menu.Item
@@ -41,6 +48,7 @@ const TopMenu = (props) => {
         as={Link}
         to="/schedule"
       />
+      <Menu.Item content="Test" as={Link} to="/test"></Menu.Item>
       {props.isSignedIn ? (
         <Menu.Item
           name="collection"

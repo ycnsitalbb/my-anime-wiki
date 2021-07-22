@@ -25,7 +25,8 @@ const AnimeItem = ({anime}) => {
         <BtnAnime
           title={anime.title}
           image_url={anime.image_url}
-          animeId={anime.mal_id}
+          mal_id={anime.mal_id}
+          score={anime.score}
         />
       </Item.Content>
     </Item>

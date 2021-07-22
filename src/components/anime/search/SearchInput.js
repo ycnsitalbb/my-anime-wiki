@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { search } from "../../../actions";
 import { useLocation } from "react-router";
+
+// the search input component shown in the homepage
 const SearchInput = (props) => {
   const [input, setInput] = useState("");
   let location = useLocation();

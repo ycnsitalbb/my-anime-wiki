@@ -15,18 +15,14 @@ import { search } from "../../../actions";
 import BtnAnime from "../../others/button/BtnAnime";
 import MyLoader from "../../others/MyLoader";
 import ReviewAccordion from "../../others/ReviewAccordin";
-import MyMultiItemCarousel from "../../others/MyMultiItemCarousel";
 const AnimeContent = ({ anime, search, reviews, pictures, staffs }) => {
   const renderGenres = () => {
     if (!!anime.genres) {
       return anime.genres.map((genre) => (
         <Label
           as={Link}
-          to="/search"
+          to={`/browse?genre=${genre.mal_id}`}
           color="blue"
-          onClick={() => {
-            search(null, 1, genre.mal_id);
-          }}
         >
           {genre.name}
         </Label>
@@ -103,7 +99,7 @@ const AnimeContent = ({ anime, search, reviews, pictures, staffs }) => {
               </Grid.Column>
               <Grid.Column>
                 <div>
-                  Score:{" "}
+                  Score:
                   <Rating
                     icon="star"
                     defaultRating={anime.score / 2}
@@ -117,8 +113,9 @@ const AnimeContent = ({ anime, search, reviews, pictures, staffs }) => {
 
                 <BtnAnime
                   image_url={anime.image_url}
-                  animeId={anime.mal_id}
+                  mal_id={anime.mal_id}
                   title={anime.title}
+                  score={anime.score}
                 />
               </Grid.Column>
             </Grid.Row>

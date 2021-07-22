@@ -10,25 +10,57 @@ export const signIn = (userId) => {
   };
 };
 
-export const addToList = (userId,anime) =>{
-  return async (dispatch)=>{
-    const response = await server.post(`/users/${userId}/animeList`,{anime})
+export const createList = (userId, listName) => {
+  return async (dispatch) => {
+    const response = await server.post(`/users/${userId}/animeList`, {
+      listName,
+    });
     dispatch({
-      type:"ADD_TO_LIST",
-      payload:{userId, animeList:response.data.animeList}
-    })
-  }
-}
+      type: "CREATE_LIST",
+      payload: { userId, animeList: response.data.animeList },
+    });
+  };
+};
+export const deleteList = (userId, listId) => {
+  return async (dispatch) => {
+    const response = await server.post(`/users/${userId}/animeList/${listId}`);
+    dispatch({
+      type: "DELETE_LIST",
+      payload: { userId, animeList: response.data.animeList },
+    });
+  };
+};
 
-export const removeFromList = (userId,animeId) =>{
-  return async (dispatch)=>{
-    const response = await server.delete(`/users/${userId}/animeList/${animeId}`,{userId,animeId})
+export const addToList = (userId, listId, { mal_id, image_url, title }) => {
+  return async (dispatch) => {
+    const response = await server.post(
+      `/users/${userId}/animeList/${listId}/anime`,
+      {
+        anime: {
+          mal_id,
+          image_url,
+          title,
+        },
+      }
+    );
     dispatch({
-      type:"REMOVE_FROM_LIST",
-      payload:{userId, animeList:response.data.animeList}
-    })
-  }
-}
+      type: "ADD_TO_LIST",
+      payload: { userId, animeList: response.data.animeList },
+    });
+  };
+};
+
+export const removeFromList = (userId, listId, mal_id) => {
+  return async (dispatch) => {
+    const response = await server.delete(
+      `/users/${userId}/animeList/${listId}/${mal_id}`
+    );
+    dispatch({
+      type: "REMOVE_FROM_LIST",
+      payload: { userId, animeList: response.data.animeList },
+    });
+  };
+};
 
 export const signOut = () => {
   return {
@@ -43,13 +75,13 @@ export const setSearchTerm = (term) => {
   };
 };
 
-export const search = (term=null,page=1,genre=null) => {
+export const search = (term = null, page = 1, genre = null) => {
   return async (dispatch) => {
     const params = {
       q: term,
       limit: 10,
-      genre:genre,
-      page:page
+      genre: genre,
+      page: page,
     };
     const response = await jikan.get("/search/anime", { params });
     dispatch({
@@ -59,10 +91,9 @@ export const search = (term=null,page=1,genre=null) => {
   };
 };
 
-
-export const fetchAnimeDetail = (animeId) => {
+export const fetchAnimeDetail = (mal_id) => {
   return async (dispatch) => {
-    const response = await jikan.get(`/anime/${animeId}`);
+    const response = await jikan.get(`/anime/${mal_id}`);
     dispatch({
       type: "FETCH_ANIME_DETAIL",
       payload: response.data,

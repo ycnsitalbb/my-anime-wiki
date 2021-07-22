@@ -9,7 +9,7 @@ const MyMultiItemCarousel = (props) => {
     return items.map((item) => {
       return (
         <div className="col-lg-2" key={item.mal_id}>
-          <AnimeCard title={item.title} image_url={item.image_url} score={item.score} animeId={item.mal_id}/>
+          <AnimeCard title={item.title} image_url={item.image_url} score={item.score} mal_id={item.mal_id}/>
         </div>
       );
     });
