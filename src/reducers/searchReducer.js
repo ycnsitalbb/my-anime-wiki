@@ -2,7 +2,8 @@ const INITIAL_STATE = {
   searchTerm: null,
   searchResults: []
 };
-export default (state = INITIAL_STATE, action) => {
+
+const searchReducer =  (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "SET_SEARCH_TERM":
       return { ...state, searchTerm: action.payload };
@@ -12,3 +13,4 @@ export default (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+export default searchReducer

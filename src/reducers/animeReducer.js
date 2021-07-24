@@ -1,5 +1,6 @@
 const INITIAL_STATE = null;
-export default (state = INITIAL_STATE, action) => {
+
+const animeReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "FETCH_ANIME_DETAIL":
       return action.payload;
@@ -9,3 +10,4 @@ export default (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+export default animeReducer

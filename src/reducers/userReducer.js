@@ -3,7 +3,7 @@ const INITIAL_STATE = {
   userId: null,
   animeList: [],
 };
-export default (state = INITIAL_STATE, action) => {
+const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "SIGN_IN":
       return {
@@ -34,3 +34,4 @@ export default (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+export default userReducer

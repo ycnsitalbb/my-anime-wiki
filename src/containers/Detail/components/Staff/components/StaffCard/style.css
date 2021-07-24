@@ -1,0 +1,9 @@
+div.ui.card{
+    height:320px;
+    width:auto;
+  }
+  .ui.card>.image, .ui.cards>.card>.image {
+    height:240px;
+    object-fit: contain;
+    background-color: white;
+  }
