@@ -6,9 +6,9 @@ import ModalAddList from "../../components/ModalAddList"
 import ModalDeleteList from "../../components/ModalDeleteList"
 const Collection = ({ animeList }) => {
   const renderAnimeList = () => {
-    return animeList.map((list) => {
+    return animeList.map((list,index) => {
       return (
-        <Segment>
+        <Segment key={index}>
           <ModalDeleteList listId={list.listId}><Button>Delete List</Button></ModalDeleteList>
           <AnimeGallery title={list.listName} items={list.anime}></AnimeGallery>
         </Segment>

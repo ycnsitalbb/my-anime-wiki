@@ -23,6 +23,8 @@ const Detail = () => {
   const [recommendations,setRecommendations] = useState([])
   useEffect(() => {
     async function fetchData() {
+      setAnime(null)
+
       const animeData = await jikan.get(
         `https://api.jikan.moe/v3/anime/${mal_id}`
       );

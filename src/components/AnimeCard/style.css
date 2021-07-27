@@ -2,8 +2,11 @@ div.ui.card{
     height:320px;
     width:auto;
   }
-  .ui.card>.image, .ui.cards>.card>.image {
+  .ui.card>.image>img, .ui.cards>.card>.image>img {
     height:240px;
-    object-fit: contain;
+    object-fit: fill;
     background-color: white;
+  }
+  .ui.left.corner.label, .ui.left.corner.label:after{
+    text-align: left;
   }

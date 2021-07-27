@@ -1,93 +1,119 @@
 import _ from "lodash";
-import React, { useState, useEffect } from "react";
-import { Container, Grid, Segment, Pagination } from "semantic-ui-react";
+import React, { useState, useEffect, createRef } from "react";
+import {
+  Container,
+  Grid,
+  Segment,
+  Pagination,
+  Ref,
+  Sticky,
+} from "semantic-ui-react";
 import { useLocation } from "react-router-dom";
-import jikan from "../../apis/jikan"
-import AnimeGallery from '../../components/AnimeGallery'
-import SideFilter from "./components/SideFilter"
+import jikan from "../../apis/jikan";
+import AnimeGallery from "../../components/AnimeGallery";
+import SideFilter from "./components/SideFilter";
 import TopFilter from "./components/TopFilter";
+import Spinner from "../../components/Spinner";
 const Browse = () => {
-  const [totalPage,setTotalPage] =useState(0);
-  const [animeChunks, setAnimeChunks] = useState([]);
-  const [animeDisplayed, setAnimeDisplayed] = useState([]);
+  const [anime, setAnime] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const useQuery = () => {
     return new URLSearchParams(useLocation().search);
   };
   const query = useQuery();
-  const season = query.get("season");
   const genreId = query.get("genre");
-  const year = query.get("year");
+  const contextRef = createRef();
+
   useEffect(() => {
     async function fetchData() {
-      const response = await jikan.get("/top/anime/1/airing");
-      const anime = response.data.top;
-      const anime_chunks = _.chunk(anime, 20);
-      setAnimeChunks(anime_chunks);
-      setAnimeDisplayed(anime_chunks[0]);
+      if (genreId) {
+        let response = await jikan.get(`/genre/anime/${genreId}/1`);
+        setAnime(response.data.anime);
+      } else {
+        let response = await jikan.get("/top/anime/1/airing");
+        setAnime(response.data.top);
+      }
     }
     fetchData();
   }, []);
   useEffect(() => {
     async function fetchData() {
-      console.log(`genreId:${genreId} year:${year} season:${season}`)
-      // if only genre is selected
-      if (genreId &&!season&&!year) {
-        const response = await jikan.get(`/genre/anime/${genreId}/1`);
-        const anime = response.data.anime;
-        const anime_chunks = _.chunk(anime, 20);
-        setAnimeChunks(anime_chunks);
-        setAnimeDisplayed(anime_chunks[0]);
-      }else if(genreId && season && !year){
-        const response = await jikan.get(`/`)
+      setCurrentPage(1);
+      if(genreId){
+      setAnime([]);
+      const response = await jikan.get(
+        `/genre/anime/${genreId}/${currentPage}`
+      );
+      setAnime(response.data.anime);
+      setTotalPage(_.ceil(response.data.item_count / 100));
       }
     }
     fetchData();
-  }, [genreId, season, year]);
+  }, [genreId]);
+
+  useEffect(() => {
+    async function fetchData() {
+      setAnime([]);
+      if(genreId){
+        const response = await jikan.get(
+          `/genre/anime/${genreId}/${currentPage}`
+        );
+        setAnime(response.data.anime);
+      }
+
+    }
+    fetchData();
+  }, [currentPage]);
+
   const sortByScore = () => {
-    return setAnimeDisplayed(
-      _.reverse(_.sortBy(animeDisplayed, [(anime) => anime.score]))
-    );
+    return setAnime(_.reverse(_.sortBy(anime, [(anime) => anime.score])));
   };
   const sortByMember = () => {
-    return setAnimeDisplayed(
-      _.reverse(_.sortBy(animeDisplayed, [(anime) => anime.members]))
-    );
+    return setAnime(_.reverse(_.sortBy(anime, [(anime) => anime.members])));
   };
   const sortByStartDate = () => {
-    return setAnimeDisplayed(
-      _.reverse(_.sortBy(animeDisplayed, [(anime) => anime.start_date]))
-    );
+    return setAnime(_.reverse(_.sortBy(anime, [(anime) => anime.start_date])));
   };
   const handlePageChange = (e, { activePage }) => {
-    setAnimeDisplayed(animeChunks[activePage - 1]);
+    setCurrentPage(activePage);
   };
   return (
-    <Container>
+    <div>
+      <Container>
       <TopFilter
         byScore={sortByScore}
         byMember={sortByMember}
         byStartDate={sortByStartDate}
-      />
+      /></Container>
+      <Container>
       <Grid columns={2}>
-        <Grid.Column width={14}>
-          <Segment>
-            <AnimeGallery
-              items={animeDisplayed}
-              dimmerActive={false}
-              itemsPerRow={5}
-            />
-            <SideFilter />
-          </Segment>
-        </Grid.Column>
+        <Ref innerRef={contextRef}>
+          
+          <Grid.Column width={12}>
+            <Segment>
+              {anime.length===0?<Spinner></Spinner>:<AnimeGallery items={anime} itemsPerRow={4} />}
+            </Segment>
+          </Grid.Column>
+          
+          </Ref>
+          <Grid.Column width={4}>
+            <Sticky context={contextRef}>
+              <SideFilter />
+            </Sticky>
+          </Grid.Column>
+
       </Grid>
+      </Container>
       <Container textAlign="center">
         <Pagination
+        siblingRange={2}
           defaultActivePage={1}
-          totalPages={animeChunks.length}
+          totalPages={totalPage}
           onPageChange={handlePageChange}
         ></Pagination>
       </Container>
-    </Container>
+      </div>
   );
 };
 export default Browse;

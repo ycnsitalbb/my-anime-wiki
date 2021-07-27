@@ -25,7 +25,7 @@ const Home = () => {
     fetchData();
   }, []);
   const createGalleries = (items,size)=>{
-    return _.chunk(items, size).map(chunk=><AnimeGallery items={chunk} />)
+    return _.chunk(items, size).map((chunk,index)=><AnimeGallery key={index} items={chunk} />)
   }
 
   return (

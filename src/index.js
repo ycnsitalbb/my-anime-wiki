@@ -17,7 +17,7 @@ import Collection from "./containers/Collection";
 import Schedule from "./containers/Schedule";
 import Error from "./containers/Error";
 import Browse from "./containers/Browse";
-import Test from "./containers/Test";
+import Login from "./containers/Login";
 
 import TopMenu from './components/TopMenu'
 import BtnScrollTop from './components/BtnScrollToTop'
@@ -34,12 +34,12 @@ ReactDOM.render(
       <TopMenu />
       <Switch>
         <Route path="/" exact component={Home} />
+        <Route path="/login" exact component={Login} />
         <Route path="/browse" exact component={Browse} />
         <Route path="/search" exact component={Search} />
         <Route path="/collection" exact component={Collection} />
         <Route path="/schedule" exact component={Schedule} />
         <Route path="/anime/:mal_id" exact component={Detail} />
-        <Route path="/test" exact component={Test} />
         <Route path="/error" exact component={Error} />
         <Route path="*" component={Error} />
       </Switch>

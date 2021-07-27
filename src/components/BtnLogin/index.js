@@ -8,7 +8,7 @@ class BtnLogin extends React.Component {
       window.gapi.client
         .init({
           clientId:
-            "838714323375-u277098uahp3eva2i56oiq53ptq9kv80.apps.googleusercontent.com",
+            "838714323375-nem7vf3up8nd56dtsqjcq505ub5ev34d.apps.googleusercontent.com",
           scope: "email",
         })
         .then(() => {
