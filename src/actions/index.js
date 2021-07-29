@@ -1,12 +1,48 @@
 import jikan from "../apis/jikan";
 import server from "../apis/server";
-export const signIn = (userId) => {
+export const googleSignIn = (userGoogleId, googleAuth) => {
   return async (dispatch) => {
-    const response = await server.post("/users", { userId });
+    console.log(" the google auth object is" +googleAuth)
+    const response = await server.post("/users/login/google", { userGoogleId });
     dispatch({
-      type: "SIGN_IN",
-      payload: { userId, animeList: response.data.animeList },
+      type: "SIGN_IN_WITH_GOOGLE",
+      payload: {
+        googleAuth,
+        userId: response.data.userId,
+        animeList: response.data.animeList,
+      },
     });
+  };
+};
+
+export const normalSignIn = (username, password) => {
+  return async (dispatch) => {
+    server
+      .post("/users/login/normal", {
+        username,
+        password,
+      })
+      .then((response) =>
+        dispatch({
+          type: "SIGN_IN",
+          payload: {
+            userId: response.data.userId,
+            animeList: response.data.animeList,
+          },
+        })
+      )
+      .catch((error) =>
+        dispatch({
+          type: "SIGN_IN_FAILED",
+          payload: error.response.data,
+        })
+      );
+  };
+};
+
+export const clearLoginError = () => {
+  return {
+    type: "CLEAR_LOGIN_ERROR_MESSAGE",
   };
 };
 
@@ -23,7 +59,9 @@ export const createList = (userId, listName) => {
 };
 export const deleteList = (userId, listId) => {
   return async (dispatch) => {
-    const response = await server.post(`/users/${userId}/animeList/${listId}`);
+    const response = await server.delete(
+      `/users/${userId}/animeList/${listId}`
+    );
     dispatch({
       type: "DELETE_LIST",
       payload: { userId, animeList: response.data.animeList },
@@ -31,7 +69,7 @@ export const deleteList = (userId, listId) => {
   };
 };
 
-export const addToList = (userId, listId, { mal_id, image_url, title }) => {
+export const addToList = (userId, listId, { mal_id, image_url, title,score }) => {
   return async (dispatch) => {
     const response = await server.post(
       `/users/${userId}/animeList/${listId}/anime`,
@@ -40,6 +78,7 @@ export const addToList = (userId, listId, { mal_id, image_url, title }) => {
           mal_id,
           image_url,
           title,
+          score
         },
       }
     );
@@ -63,8 +102,15 @@ export const removeFromList = (userId, listId, mal_id) => {
 };
 
 export const signOut = () => {
-  return {
-    type: "SIGN_OUT",
+  return (dispatch, getState) => {
+    if (getState().user.googleSignIn===true) {
+      // logout from google api
+      getState().user.googleAuth.signOut();
+      console.log("signed out from google auth")
+    }
+    dispatch({
+      type: "SIGN_OUT",
+    });
   };
 };
 

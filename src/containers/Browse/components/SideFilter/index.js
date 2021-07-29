@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Segment, Header, Label } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { genresList } from "../../../../genres";
-const BrowseSideMenu = () => {
+const SideFilter = () => {
   const [activeGenreId, setActiveGenreId] = useState(null);
   const handleGenreClicked = (clickedGenreId) => {
     if (activeGenreId === clickedGenreId) {
@@ -19,7 +19,7 @@ const BrowseSideMenu = () => {
         <Label.Group>
           {genresList.map(({ genre_id, genre_name }) => (
             <Label
-              id={genre_id}
+              key={genre_id}
               as={Link}
               active={activeGenreId === genre_id}
               onClick={() => handleGenreClicked(genre_id)}
@@ -33,4 +33,4 @@ const BrowseSideMenu = () => {
     </Segment>
   );
 };
-export default BrowseSideMenu;
+export default SideFilter;

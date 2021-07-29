@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from "axios";
 export default axios.create({
-    baseURL: "https://afternoon-anchorage-32165.herokuapp.com/"
-  })
+  baseURL: "http://localhost:3001",
+  //baseURL: "https://afternoon-anchorage-32165.herokuapp.com/"
+});

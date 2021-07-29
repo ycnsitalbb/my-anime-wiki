@@ -26,6 +26,7 @@ const ModalAddAnime = ({
         <List selection>
           {animeList.map((list) => (
             <List.Item
+              key={list.listId}
               active={selectedListId === list.listId}
               onClick={() => setSelectedListId(list.listId)}
             >

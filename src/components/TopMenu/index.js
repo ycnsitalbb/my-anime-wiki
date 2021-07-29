@@ -1,19 +1,18 @@
-import React, { useState,useEffect } from "react";
-import Login from "../BtnLogin";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
-import { Menu } from "semantic-ui-react";
-import SearchInput from "./components/SearchBar";
+import { Menu, Portal } from "semantic-ui-react";
+import BtnLogin from "../BtnLogin";
 const TopMenu = (props) => {
   const location = useLocation();
   const [activeMenu, setActiveMenu] = useState("home");
   const handleMenuClicked = (e, { name }) => setActiveMenu(name);
   // to update the menu active status when a user jumps from anime detail page to browse page
   useEffect(() => {
-    if(location.pathname.includes("browse")){
-      setActiveMenu("browse")
+    if (location.pathname.includes("browse")) {
+      setActiveMenu("browse");
     }
-  }, [location])
+  }, [location]);
   return (
     <Menu>
       <Menu.Item
@@ -48,19 +47,27 @@ const TopMenu = (props) => {
         as={Link}
         to="/schedule"
       />
-      {props.isSignedIn ? (
-        <Menu.Item
-          name="collection"
-          active={activeMenu === "collection"}
-          content="Collection"
-          onClick={handleMenuClicked}
-          as={Link}
-          to="/collection"
-        />
-      ) : null}
+
+      <Menu.Item
+        name="collection"
+        active={activeMenu === "collection"}
+        content="Collection"
+        onClick={handleMenuClicked}
+        as={Link}
+        to="/collection"
+      />
+
+      <Menu.Item
+        name="community"
+        active={activeMenu === "community"}
+        content="Community"
+        onClick={handleMenuClicked}
+        as={Link}
+        to="/community"
+      />
+
       <div className="right menu">
-        <SearchInput />
-        <Login />
+        <BtnLogin></BtnLogin>
       </div>
     </Menu>
   );
